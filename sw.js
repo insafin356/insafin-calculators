@@ -1,8 +1,10 @@
-const CACHE_NAME = 'gnb-calc-v1';
+const CACHE_NAME = 'gnb-calc-v2-excel';
 const urlsToCache = [
   './',
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './excel-export.js',
+  './vendor/exceljs.min.js'
 ];
 
 self.addEventListener('install', function(event) {

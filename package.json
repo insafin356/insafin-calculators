@@ -1,0 +1,28 @@
+{
+  "name": "gnb-calculators",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sw.js",
+  "scripts": {
+    "test": "node test-export.cjs",
+    "build": "node build.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/insafin356/insafin-calculators.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/insafin356/insafin-calculators/issues"
+  },
+  "homepage": "https://github.com/insafin356/insafin-calculators#readme",
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  },
+  "devDependencies": {
+    "hyperformula": "^3.1.0"
+  }
+}

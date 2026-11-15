@@ -1,0 +1,1 @@
+const fs=require('fs');fs.mkdirSync('vendor',{recursive:true});fs.copyFileSync('node_modules/exceljs/dist/exceljs.min.js','vendor/exceljs.min.js');

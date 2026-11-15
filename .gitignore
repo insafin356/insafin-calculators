@@ -1,0 +1,4 @@
+node_modules/
+private/
+
+vendor/exceljs.min.js

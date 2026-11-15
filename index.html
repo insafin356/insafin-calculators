@@ -432,79 +432,7 @@ function downloadExcel() {
   const mBent = Vprig * cb;
   const mPoly = Vprig * cp;
 
-  const wb = XLSX.utils.book_new();
-  wb.Props = {
-    Title: 'Расчет ГНБ — INSAFIN',
-    Subject: 'Подбор установки ГНБ по СП 341.1325800.2017',
-    Author: 'INSAFIN',
-    CreatedDate: new Date()
-  };
-
-  const wsData = [
-    ['РАСЧЁТ ГНБ', '', 'СП 341.1325800.2017'],
-    ['Дата:', new Date().toLocaleString('ru-RU'), ''],
-    [],
-    ['ВХОДНЫЕ ДАННЫЕ'],
-    ['Параметр', 'Значение', 'Ед. изм.'],
-    ['Тип грунта', soilText, ''],
-    ['Группа грунтов', group === 'VIII+' ? 'VIII–XII' : group, ''],
-    ['Коэффициент F', F || 'не установлен', ''],
-    ['Длина перехода L', L, 'м'],
-    ['Наружный диаметр dн', dn, 'мм'],
-    ['Суммарный момент ΣM', sigmaM || 'не задан', 'кН·м'],
-    ['Перебур δ', deltaPct, '%'],
-    ['Коэффициент потерь Кр', Kr, ''],
-    ['Концентрация бентонита cб', cb, 'кг/м³'],
-    ['Концентрация полимера cп', cp, 'кг/м³'],
-    [],
-    ['РЕЗУЛЬТАТЫ ПОДБОРА УСТАНОВКИ'],
-    ['Параметр', 'Значение', 'Ед. изм.'],
-    ['Мин. диаметр бурового канала Dбур', fmtNum(Dbur, 0), 'мм'],
-    ['Мин. сила тяги Pmin', fmtNum(Pmin, 0), 'кН'],
-    ['Коэф. запаса по тяге k1', fmtNum(k1, 2), ''],
-    ['Требуемая сила тяги Pт', fmtNum(Pt, 1), 'кН'],
-    ['Коэф. запаса по моменту k2', fmtNum(k2, 2), ''],
-    ['Требуемый момент Mб', fmtNum(Mb, 1), 'кН·м'],
-    ['Класс по тяге', cPull.name, ''],
-    ['Класс по моменту', cMom.name, ''],
-    ['Класс по длине', cLen.name, ''],
-    ['Класс по диаметру', cDiam.name, ''],
-    ['РЕКОМЕНДУЕМЫЙ КЛАСС', totalClass, ''],
-    [],
-    ['РЕЗУЛЬТАТЫ РАСЧЁТА РАСТВОРА'],
-    ['Параметр', 'Значение', 'Ед. изм.'],
-    ['Расчётный объём Vбр', fmtNum(Vbr, 2), 'м³'],
-    ['Объём приготовляемого Vприг', fmtNum(Vprig, 2), 'м³'],
-    ['Потребность в бентоните mб', fmtNum(mBent, 1), 'кг'],
-    ['Потребность в полимере mп', fmtNum(mPoly, 1), 'кг'],
-    [],
-    ['ПАСПОРТНЫЕ ХАРАКТЕРИСТИКИ'],
-    ['Требуемая тяга', '≥ ' + fmtNum(Pt, 0), 'кН'],
-    ['Требуемый момент', sigmaM > 0 ? '≥ ' + fmtNum(Mb, 1) : 'не определён', 'кН·м'],
-  ];
-
-  const ws = XLSX.utils.aoa_to_sheet(wsData);
-
-  // Ширина колонок
-  ws['!cols'] = [
-    {wch: 38},
-    {wch: 22},
-    {wch: 12}
-  ];
-
-  // Стили заголовков (жирный)
-  const boldRows = [0, 3, 16, 30, 36];
-  boldRows.forEach(r => {
-    for (let c = 0; c < 3; c++) {
-      const cell = ws[XLSX.utils.encode_cell({r: r, c: c})];
-      if (cell) {
-        cell.s = { font: { bold: true, sz: 12, color: { rgb: 'FFFFFF' } }, fill: { fgColor: { rgb: '1e3a5f' } } };
-      }
-    }
-  });
-
-  XLSX.utils.book_append_sheet(wb, ws, 'Расчет ГНБ');
-  XLSX.writeFile(wb, 'Расчет_ГНБ_' + new Date().toISOString().slice(0,10) + '.xlsx');
+  return exportGnbExcel({soilText,F,k1,k2,group,L,dn,sigmaM,deltaPct,Kr,cb,cp,Dbur,Pmin,Pt,Mb,cPull,cMom,cLen,cDiam,maxRank,totalClass,Vbr,Vprig,mBent,mPoly},pminMatrix);
 }
 
 function calculateGNB() {
@@ -619,7 +547,8 @@ document.querySelectorAll('#gnb input, #gnb select').forEach(el => {
 calculateGNB();
 </script>
 
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script src="vendor/exceljs.min.js"></script>
+<script src="excel-export.js"></script>
 <!-- PWA Service Worker -->
 <script>
 if ('serviceWorker' in navigator) {

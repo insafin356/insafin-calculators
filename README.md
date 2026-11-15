@@ -1,1 +1,5 @@
-# insafin-calculators
+# Калькулятор ГНБ
+
+Сборка: npm ci && npm run build. Проверка: npm test.
+Публикуются index.html, excel-export.js, sw.js, manifest.json и vendor/.
+Excel: оформленный расчёт, справочник, 16 расчётных формул, ссылки на СП 341.1325800.2017 и настройки печати A4. Исходный алгоритм калькулятора сохранён.
