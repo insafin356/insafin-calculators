@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rnmc-unified-icons-v1';
+const CACHE_NAME = 'rnmc-unified-icons-v2';
 const urlsToCache = [
   './',
   './index.html',
@@ -13,7 +13,7 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        return cache.addAll(urlsToCache);
+        return cache.addAll(urlsToCache.map(url => new Request(url, { cache: 'reload' })));
       })
   );
   self.skipWaiting();
