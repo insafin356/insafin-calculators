@@ -1,7 +1,9 @@
-const CACHE_NAME = 'gnb-calc-v3-excel';
+const CACHE_NAME = 'gnb-calculators-rnmc-visual-v2';
 const urlsToCache = [
   './',
   './index.html',
+  './visual-theme.css',
+  './visual-theme.js',
   './manifest.json',
   './excel-export.js',
   './vendor/exceljs.min.js'
