@@ -8,7 +8,7 @@ function buildGnbWorkbook(ExcelJS, d, matrix) {
  const formula=(n,f,result)=>ws.getCell('B'+n).value={formula:f,result};
  row(1,'РАСЧЁТ ГНБ');ws.mergeCells('A1:D1');
  row(2,'Подбор установки и потребность в буровом растворе');ws.mergeCells('A2:D2');
- row(3,'Дата формирования',new Date().toLocaleDateString('ru-RU'),'','INSAFIN · Стоимостной инжиниринг');
+ row(3,'Дата формирования',new Date().toLocaleDateString('ru-RU'));
  row(4,'01 / ИСХОДНЫЕ ДАННЫЕ');
  row(5,'Показатель','Значение','Ед. изм.','Основание / пояснение');
  row(6,'Грунт',d.soilText,'','Выбран в калькуляторе');
@@ -44,7 +44,6 @@ function buildGnbWorkbook(ExcelJS, d, matrix) {
  row(39,'Для МАКСИ/МЕГА нужен поэтапный расчёт по Л.3.1–Л.3.5. При F = 0 объём раствора не определяется. При ΣM = 0 класс предварительный.');ws.mergeCells('A39:D39');
  row(40,'Основание: СП 341.1325800.2017, приложения А, И, Л и таблица 8.3. Коэффициенты, границы диапазонов и алгоритм перенесены из калькулятора.');ws.mergeCells('A40:D40');
  row(41,'Составил: ____________________','Проверил: ____________________');ws.mergeCells('B41:D41');
- row(42,'© 2026 INSAFIN — Стоимостной инжиниринг. Сафин Инсаф Фидаэлевич. Все права защищены.');ws.mergeCells('A42:D42');
  ref.addRow(['СП 341.1325800.2017 / СПРАВОЧНЫЕ ДАННЫЕ']);ref.mergeCells('A1:H1');
  ref.addRow(['Таблица А.3: минимальное усилие, кН. Границы диапазонов — как в калькуляторе.']);ref.mergeCells('A2:H2');
  ref.addRow(['L от, м / D от, мм',...matrix.diamBounds]);matrix.values.forEach((values,i)=>ref.addRow([matrix.lengthBounds[i],...values]));
@@ -54,8 +53,8 @@ function buildGnbWorkbook(ExcelJS, d, matrix) {
  ref.columns.forEach((c,i)=>c.width=i===0?25:13);
  for(const sh of [ws,ref]){
   sh.eachRow((r,n)=>{r.height=25;r.eachCell({includeEmpty:true},c=>{c.font={name:'Calibri',size:11,color:{argb:'FF203348'}};c.alignment={vertical:'middle',wrapText:true};c.border={bottom:{style:'hair',color:{argb:'FFD7E0E7'}}};});});
-  sh.pageSetup={paperSize:9,orientation:sh===ws?'portrait':'landscape',fitToPage:true,fitToWidth:1,fitToHeight:sh===ws?0:1,margins:{left:.3,right:.3,top:.4,bottom:.4,header:.15,footer:.15},printArea:sh===ws?'A1:D42':'A1:H22'};
-  sh.headerFooter.oddFooter='&LINSAFIN&C&P / &N&RРасчёт ГНБ';sh.views=[{state:'frozen',ySplit:5,showGridLines:false}];
+  sh.pageSetup={paperSize:9,orientation:sh===ws?'portrait':'landscape',fitToPage:true,fitToWidth:1,fitToHeight:sh===ws?0:1,margins:{left:.3,right:.3,top:.4,bottom:.4,header:.15,footer:.15},printArea:sh===ws?'A1:D41':'A1:H22'};
+  sh.headerFooter.oddFooter='&C&P / &N&RРасчёт ГНБ';sh.views=[{state:'frozen',ySplit:5,showGridLines:false}];
  }
  for(const n of [1,4,17,31,38]){if(n!==1)ws.mergeCells(`A${n}:D${n}`);const c=ws.getCell('A'+n);c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF18364B'}};c.font={name:'Calibri',size:n===1?20:12,bold:true,color:{argb:'FFFFFFFF'}};ws.getRow(n).height=n===1?36:27;}
  for(const n of [5,18,32])ws.getRow(n).eachCell(c=>{c.font={name:'Calibri',size:10,bold:true};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFE2EAF0'}};});
@@ -63,7 +62,7 @@ function buildGnbWorkbook(ExcelJS, d, matrix) {
  for(const n of [22,29,34,35,36])ws.getRow(n).eachCell(c=>{c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFF0CC'}};c.font={name:'Calibri',size:11,bold:true,color:{argb:'FF18364B'}};});
  for(let n=8;n<=36;n++)ws.getCell('B'+n).numFmt='#,##0.00';
  for(const n of [9,10,19,20])ws.getCell('B'+n).numFmt='#,##0';
- ws.getRow(6).height=64;ws.getRow(29).height=36;ws.getRow(39).height=42;ws.getRow(40).height=38;ws.getRow(42).height=30;
+ ws.getRow(6).height=64;ws.getRow(29).height=36;ws.getRow(39).height=42;ws.getRow(40).height=38;
  for(const n of [1,3])ref.getRow(n).eachCell(c=>{c.font={name:'Calibri',size:11,bold:true,color:{argb:'FFFFFFFF'}};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF18364B'}};});
  ws.getRow(30).addPageBreak();ws.pageSetup.printTitlesRow="1:3";
  return wb;

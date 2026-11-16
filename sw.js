@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gnb-calc-v2-excel';
+const CACHE_NAME = 'gnb-calc-v3-excel';
 const urlsToCache = [
   './',
   './index.html',
